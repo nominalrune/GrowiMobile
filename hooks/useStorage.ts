@@ -3,7 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 export default function useStorage() {
 	async function set(key: string, value: string | number | boolean | object) {
 		try {
-			const jsonValue = JSON.stringify(value);
+			const jsonValue = typeof value==='object'?JSON.stringify(value):value.toString();
 			await AsyncStorage.setItem(key, jsonValue);
 		} catch (e) {
 			// saving error

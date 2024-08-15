@@ -1,27 +1,33 @@
 import { StatusBar } from 'expo-status-bar';
-import { ReactNode } from 'react';
-import { View, Text } from 'react-native';
+import { ReactNode, useEffect, useState } from 'react';
+import { View, Text, SafeAreaView } from 'react-native';
 import ApiProvider from '../components/ApiProvider';
 import useApi from '../hooks/useApi';
-import SView from '../components/Styled/SView';
+import { router } from 'expo-router';
+import { Slot } from 'expo-router';
+import useAuthStore from '../hooks/useAuthStore';
+import GrowiAPI from '../services/GrowiAPI/GrowiAPI';
 
-export default function Lauout({ children }: { children: ReactNode; }) {
-	return (
-		<ApiProvider>
-			<LoginOnlyContent>{children}</LoginOnlyContent>
-		</ApiProvider>
-	);
-}
+export default function Layout({ children }: { children: ReactNode; }) {
 
-function LoginOnlyContent({ children }: { children: ReactNode; }) {
-	const api = useApi();
-
-	return api
-		? <View>
-			<StatusBar style="auto" translucent={true} />
+	return <ApiProvider>
+		<SafeAreaView>
 			{children}
-		</View>
-		: <SView className='flex place-content-center'>
-			<Text>Loading.</Text>
-		</SView>;
+		</SafeAreaView>
+		{/* <Slot /> */}
+	</ApiProvider>;
 }
+
+// function LoginOnlyContent({ children }: { children: ReactNode; }) {
+// 	return api
+// 		? <View>
+// 			<StatusBar style="auto" translucent={true} />
+// 			{children}
+
+// 			<View><Text>logged in</Text></View>
+// 			<Text>aaaaa</Text>
+// 		</View>
+// 		: <View className='flex place-content-center'>
+// 			<Text>Loading.</Text>
+// 		</View>;
+// }

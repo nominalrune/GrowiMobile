@@ -23,7 +23,7 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "scheme": "your-app-scheme",
+    "scheme": "growi",
     "plugins": [
       [
         "expo-secure-store",

@@ -1,9 +1,7 @@
-import { TextInput, View } from 'react-native';
-import SView from '../components/Styled/SView';
-import SText from '../components/Styled/SText';
+import { TextInput, Text, View, Pressable } from 'react-native';
 import { useState, useEffect } from 'react';
 import useAuthStore from '../hooks/useAuthStore';
-import { router } from 'expo-router';
+import { Link, router } from 'expo-router';
 export default function Login() {
 	const [url, setUrl] = useState("");
 	const [token, setToken] = useState("");
@@ -20,10 +18,19 @@ export default function Login() {
 				}
 			});
 	}, [url, token]);
-	return <>
-		<SText>アクセス情報の入力</SText>
-		<SText>Site URL<TextInput onChangeText={text => setUrl(text)} /></SText>
-		<SText>Your API Token<TextInput onChangeText={setToken} /></SText>
-		<SText className='text-slate-600'>{message}</SText>
-	</>;
+	return <View className='flex flex-col gap-4 m-2'>
+		<Text className='text-2xl'>アクセス情報の入力</Text>
+		<View className='flex justify-start'>
+			<Text>Site URL</Text>
+			<TextInput className='max-w-xs border outline-2 border-slate-800 rounded' onChangeText={setUrl} />
+		</View>
+		<View className='flex justify-start'>
+			<Text>Your API Token</Text>
+			<TextInput className='max-w-xs border outline-2 border-slate-800 rounded' onChangeText={setToken} />
+		</View>
+		{message ? <Text className='text-slate-600'>{message}</Text> : <></>}
+		<Link href='/'>
+			<Pressable onPress={() => router.push('/')} className='bg-emerald-400 hover:bg-emerald-300'><Text>次へ</Text></Pressable>
+		</Link>
+	</View>;
 }

@@ -7,10 +7,12 @@ export default function useAuthStore() {
 	const secureStore = useSecureStore();
 	const storage = useStorage();
 	async function set(url: string, token: string) {
+		console.log('useAuthStore, save', url, token)
 		await storage.set("url", url);
 		await secureStore.set("token", token);
 	}
 	async function check(url: string, token: string) {
+		console.log('useAuthStore, check', url, token)
 		const api = new GrowiAPI(url, token);
 		try {
 			await api.fetchDocuments();
@@ -23,6 +25,7 @@ export default function useAuthStore() {
 	async function getApi() {
 		const url = await storage.get("url");
 		const token = await secureStore.get("token");
+		console.log('useAuthStore, getApi', url, token)
 		if (!url || !token) { throw new Error('url or token not set.'); }
 		const api = new GrowiAPI(url, token,)
 		return api;

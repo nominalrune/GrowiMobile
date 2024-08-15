@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import GrowiAPI from '../services/GrowiAPI/GrowiAPI';
 import useSecureStore from './useSecureStore';
 import useStorage from './useStorage';
@@ -26,6 +26,8 @@ export default function usePage(path: string) {
 		const result = await api.savePageContent(page);
 		setPage({ ...result.page, revision: result.revision });
 	}
-	promise.current = initialize();
+	useEffect(() => {
+		promise.current = initialize();
+	}, []);
 	return { page, update, save };
 }
