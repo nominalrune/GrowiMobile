@@ -3,7 +3,9 @@ import { Text, View } from 'react-native';
 import Node from './Node';
 
 export default function Heading({ node, className }: { node: HeadingType; className?:string }) {
-	return <Text className={node.depth === 1 ? 'text-2xl' : node.depth === 2 ? "text-xl" : "text-lg"}>
+	return <Text className={`${node.depth === 1 ? 'text-2xl' : node.depth === 2 ? "text-xl" : "text-lg"}`}>
+		<Text className='text-slate-400/80 font-semibold'>{'#'.repeat(node.depth) + ' '}</Text>
 		{node.children.map((item,i) => <Node key={i} node={item} className={className} />)}
+		{'\n'}
 	</Text>;
 }

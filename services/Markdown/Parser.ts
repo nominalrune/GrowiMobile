@@ -9,7 +9,7 @@ export default class Parser {
 		const root = unified().use(remarkGfm).use(remarkParse).parse(input);
 		return root;
 	}
-	static async stringify(input: Root) {
+	static stringify(input: Root) {
 		const content = unified().use(remarkGfm).use(remarkStringify).stringify(input);
 		return content;
 	}

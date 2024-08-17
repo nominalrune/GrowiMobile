@@ -11,10 +11,10 @@ import GrowiAPI from '../services/GrowiAPI/GrowiAPI';
 export default function Layout({ children }: { children: ReactNode; }) {
 
 	return <ApiProvider>
-		<SafeAreaView>
+		<SafeAreaView className='h-full'>
 			{children}
+			{/* <Slot /> */}
 		</SafeAreaView>
-		{/* <Slot /> */}
 	</ApiProvider>;
 }
 
