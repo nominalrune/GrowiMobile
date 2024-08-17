@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 import GrowiAPI from '../services/GrowiAPI/GrowiAPI';
 import ApiProvider from '../components/ApiProvider';
 import Layout from './ _layout';
-import Home from '../components';
+import Home from '../components/Home';
 
 export default function Index() {
 	return  <Layout>
