@@ -8,16 +8,16 @@ export default class GrowiAPI {
 		this.setting = { url, token };
 	}
 	private async fetch<T>(path: string, method: 'GET' | 'POST' | 'PUT', urlParam?: object, body?: object): Promise<T> {
-		console.log("url:", this.setting.url,"https://wiki.paulsenglish.jp/",this.setting.url==="https://wiki.paulsenglish.jp/", 'path', path, 'method', method, 'urlParam', urlParam);
+		console.log("url:", this.setting.url, "https://wiki.paulsenglish.jp/", this.setting.url === "https://wiki.paulsenglish.jp/", 'path', path, 'method', method, 'urlParam', urlParam);
 		let _url: URL;
 		try {
 			_url = new URL(`_api/v3/${path}`, "https://wiki.paulsenglish.jp");
 			// _url = new URL(`_api/v3/${path}`, "wiki.paulsenglish.jp");
 			// _url = new URL(`_api/v3/${path}`, this.setting.url);
 		} catch (e) {
-			console.info("error",e);
-			return;
-		 }
+			console.info("error", e);
+			throw e;
+		}
 		console.log('good.');
 		_url.searchParams.set('access_token', this.setting.token);
 		if (urlParam) {
