@@ -42,7 +42,7 @@ import { Text, View } from 'react-native';
 type NodeType = BlockquoteType | BreakType | CodeType |
 	DeleteType | DefinitionType | EmphasisType | HeadingType | HtmlType | ImageType | ImageReferenceType | InlineCodeType | LinkType | LinkReferenceType | ListType | ListItemType | ParagraphType | RootType | StrongType | TableType | TextType | ThematicBreakType
 	| PhrasingContentType | TableCell | TableRow | Yaml | FootnoteDefinitionType;
-export default function Node({ node }: { node: NodeType; }) {
+export default function Node({ node, className }: { node: NodeType; className?:string }) {
 	switch (node.type) {
 		case 'blockquote':
 			return <Blockquote node={node} />;
@@ -64,11 +64,11 @@ export default function Node({ node }: { node: NodeType; }) {
 		case 'inlineCode':
 			return <InlineCode node={node} />;
 		case 'paragraph':
-			return <Paragraph node={node} />;
+			return <Paragraph className={className} node={node} />;
 		case 'table':
 			return <Table node={node} />;
 		case 'text':
-			return <Text>{node.value}</Text>;
+			return <Text className={className}>{node.value}</Text>;
 		case 'break':
 			return <View></View>;
 		default:

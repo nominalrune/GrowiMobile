@@ -1,8 +1,8 @@
 import { Root as RootType } from "mdast";
-import { Text, View } from 'react-native';
-import Node from './Node';
+import { ScrollView, Text, View } from 'react-native';
+import Block from './Block';
 export default function Root({ node }: { node: RootType; }) {
-	return <View> {
-		node.children.map((item, i) => <Node key={i} node={item} />)
-	} </View>;
+	return <ScrollView horizontal={true} className='m-4'>
+		<Block node={node} />
+	</ScrollView>;
 }
