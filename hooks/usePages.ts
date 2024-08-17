@@ -13,15 +13,16 @@ export default function usePages() {
 			return;
 		}
 		api.fetchDocuments().then(pages => {
-			 setPages(pages); 
+			setPages(pages);
 			//  console.log('pages', pages);
-			 });
+		});
 	}, [api]);
-	async function refresh(){
-		if(!api) {return;}
+	async function refresh() {
+		console.log('usePages.refresh');
+		if (!api) { return; }
 		const result = await api.fetchDocuments();
 		setPages(result);
-		console.log('usePages.refresh')
+		console.log('usePages.refresh');
 	}
 	return { pages, refresh };
 }

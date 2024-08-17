@@ -9,8 +9,6 @@ export default function usePage(path: string) {
 	const promise = useRef<Promise<any>>();
 	const [page, setPage] = useState<PageContent>();
 	const [api, setApi] = useState<GrowiAPI>();
-	const secureStorage = useSecureStore();
-	const storage = useStorage();
 	async function initialize() {
 		const { getApi } = useAuthStore();
 		const api = await getApi();

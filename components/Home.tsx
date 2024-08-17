@@ -9,11 +9,11 @@ export default function Home() {
 	return <>
 		<View className='flex flex-col gap-6 m-2 items-start'>
 			<Text className='text-2xl text-red-500'>index</Text>
-			{pages ? <>
+			{!!pages.length ? <>
 				<Button onPress={refresh}><Text className='text-white'>refresh</Text></Button>
 				<FlatList
 					data={pages}
-					renderItem={({ item }: { item: Page; }) => <PageItem page={item}/>}
+					renderItem={({ item }) => <PageItem page={item}/>}
 					keyExtractor={(item) => item._id}
 				/></> : <Button  onPress={() => router.push('/login')}><Text>login</Text></Button>
 			}

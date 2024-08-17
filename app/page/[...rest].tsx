@@ -17,10 +17,10 @@ export default function Page() {
   //   if(!page) return;
   //   Parser.parse(page.revision.body ?? '')
   // },[page]);
-  const content = page ? Parser.parse(page.revision.body ?? '') : undefined;
+  const content = page ? Parser.parse(page.revision.body) : undefined;
   return <Layout>
     <View className='bg-slate-50'>
-      <View className='m-4 my-2'>
+      <View className='mx-4 my-2'>
         <Text className='text-3xl text-slate-700'>{rest.at(-1)}</Text>
         <Text className='text-slate-400'>{path}</Text>
       </View>
