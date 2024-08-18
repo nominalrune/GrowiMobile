@@ -38,39 +38,30 @@ import InlineCode from './InlineCode';
 import Paragraph from './Paragraph';
 import Table from './Table';
 import { Text, View } from 'react-native';
-
-type NodeType = BlockquoteType | BreakType | CodeType |
-	DeleteType | DefinitionType | EmphasisType | HeadingType | HtmlType | ImageType | ImageReferenceType | InlineCodeType | LinkType | LinkReferenceType | ListType | ListItemType | ParagraphType | RootType | StrongType | TableType | TextType | ThematicBreakType
-	| PhrasingContentType | TableCell | TableRow | Yaml | FootnoteDefinitionType;
-export default function Node({ node, className, prefix }: { node: NodeType; className?:string; prefix?:string }) {
+type FlowContentType =
+  BlockquoteType | CodeType | HeadingType | HtmlType 
+  | ListType | ThematicBreakType | DefinitionType | ParagraphType
+  |TableType|FootnoteDefinitionType
+interface Prop {
+	node: FlowContentType;
+	prefix?: string;
+}
+export default function FlowContent({ node, prefix, }: Prop) {
 	switch (node.type) {
 		case 'blockquote':
-			return <><Text>{prefix}</Text><Blockquote node={node} /></>;
+			return <Blockquote node={node}  prefix={prefix}/>;
 		case 'code':
-			return <><Code node={node} /></>;
-		case 'emphasis':
-		case 'strong':
-			return <Strong node={node} />;
+			return <><Code node={node}  prefix={prefix}/></>;
 		case 'heading':
-			return <Heading node={node} />;
+			return <Heading node={node}  prefix={prefix}/>;
 		case 'html':
 			return <><Text>{prefix}</Text><Html node={node} /></>;
-		case 'image':
-			return <Image node={node} />;
-		case 'link':
-			return <Link node={node} />;
 		case 'list':
 			return <><List node={node} prefix={prefix} /></>;
-		case 'inlineCode':
-			return <InlineCode node={node} />;
 		case 'paragraph':
-			return <><Text>{prefix}</Text><Paragraph className={className} node={node} /></>;
+			return <Paragraph node={node} prefix={prefix} />;
 		case 'table':
-			return <Table node={node} />;
-		case 'text':
-			return <><Text>{prefix}</Text><Text className={className}>{node.value}</Text></>;
-		case 'break':
-			return <Text>{prefix}</Text>;
+			return <Table node={node}  prefix={prefix}/>;
 		default:
 			return <Text>(not defined)</Text>;
 	}

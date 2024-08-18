@@ -1,7 +1,15 @@
 import { Paragraph as ParagraphType } from "mdast";
 import { Text, View } from 'react-native';
-import Node from './Node';
-import Block from './Block';
-export default function Paragraph({ node, className }: { node: ParagraphType; className?:string }) {
-	return <Block className={className} node={node}/>;
+import PhrasingContent from './PhrasingContent';
+import { Fragment } from 'react';
+export default function Paragraph({ node, prefix }: {
+	node: ParagraphType;
+	prefix?: string;
+}) {
+	return <Text>{
+		node.children.map((child,i) => <Fragment key={i}>
+			<Text>{prefix}</Text>
+			<PhrasingContent node={child} />
+		</Fragment>)
+	}{`\n`}</Text>;
 }

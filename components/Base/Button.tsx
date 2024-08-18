@@ -6,7 +6,7 @@ interface Prop {
 	onPress?: ((event: GestureResponderEvent) => void);
 }
 export default function Button({ children, onPress }: Prop) {
-	return <Pressable onPress={onPress} className='justify-center items-center bg-blue-400 active:bg-blue-300 rounded px-4 py-1 m-6'>
-			{children}
+	return <Pressable onPress={onPress} className='justify-center items-center px-4 py-1 rounded bg-slate-400 active:bg-slate-300'>
+			<Text className='text-white'>{children}</Text>
 		</Pressable>;
 }

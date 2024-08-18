@@ -9,7 +9,7 @@ export default function usePages() {
 	useEffect(() => {
 		console.log('usePages(), api updated', api);
 		if (!api) {
-			console.warn('usePages, api not set');
+			console.info('usePages, api not set');
 			return;
 		}
 		api.fetchDocuments().then(pages => {

@@ -28,14 +28,10 @@ import {
 	Yaml,
 } from 'mdast';
 import Node from './Node';
-import { Fragment } from 'react';
 
 type NodeType = ParagraphType | RootType | EmphasisType | StrongType;
-export default function Block({ node, className, prefix }: { node: NodeType; className?: string; prefix:string }) {
-	return <Text>
-		{
-			node.children.map((item, i) => <Fragment key={i}><Text>{prefix}</Text><Node className={className} key={i} node={item} /></Fragment>)
-		}
-		{'\n'}
-	</Text>;
+export default function Inline({ node, className }: { node: NodeType; className?:string }) {
+	return <Text className='flex flex-row'>{
+		node.children.map((item, i) => <Node className={className} key={i} node={item} />)
+	}</Text>;
 }
