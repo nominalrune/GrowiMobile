@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "GrowiMobile",
-    "slug": "GrowiMobile",
+    "slug": "growi-mobile",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -32,6 +32,15 @@
         }
       ],
       "expo-router"
-    ]
+    ],
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "eef6e3cb-34aa-4674-8c7e-82e72d7ffbec"
+      }
+    },
+    "owner": "nominalrune"
   }
 }
