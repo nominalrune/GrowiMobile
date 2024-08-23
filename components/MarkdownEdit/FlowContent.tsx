@@ -38,31 +38,31 @@ import InlineCode from './InlineCode';
 import Paragraph from './Paragraph';
 import Table from './Table';
 import { Text, View } from 'react-native';
+import WithText from '../../types/WithText';
 type FlowContentType =
-  BlockquoteType | CodeType | HeadingType | HtmlType 
-  | ListType | ThematicBreakType | DefinitionType | ParagraphType
-  |TableType|FootnoteDefinitionType
+	WithText<BlockquoteType> | WithText<CodeType> | WithText<HeadingType> | WithText<HtmlType>
+	| WithText<ListType> | WithText<ThematicBreakType> | WithText<DefinitionType> | WithText<ParagraphType>
+	| WithText<TableType> | WithText<FootnoteDefinitionType>;
 interface Prop {
 	node: FlowContentType;
-	prefix?: string;
 }
-export default function FlowContent({ node, prefix, }: Prop) {
+export default function FlowContent({ node, }: Prop) {
 	switch (node.type) {
 		case 'blockquote':
-			return <Blockquote node={node}  prefix={prefix}/>;
+			return <Blockquote node={node} />;
 		case 'code':
-			return <><Code node={node}  prefix={prefix}/></>;
+			return <><Code node={node} /></>;
 		case 'heading':
-			return <Heading node={node}  prefix={prefix}/>;
+			return <Heading node={node} />;
 		case 'html':
-			return <><Text>{prefix}</Text><Html node={node} /></>;
+			return <Html node={node} />;
 		case 'list':
-			return <><List node={node} prefix={prefix} /></>;
+			return <><List node={node} /></>;
 		case 'paragraph':
-			return <Paragraph node={node} prefix={prefix} />;
+			return <Paragraph node={node} />;
 		case 'table':
-			return <Table node={node}  prefix={prefix}/>;
+			return <Table node={node} />;
 		default:
-			return <Text>(not defined)</Text>;
+			return <Text>{node.text}</Text>;
 	}
 }

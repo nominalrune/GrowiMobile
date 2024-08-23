@@ -20,20 +20,21 @@ export default class Parser {
 function putTextContent(node: Nodes, texts: string[]): NodeWithText {
 	const textContent = [...texts]
 		.filter(i => !!i)
-		.splice((node.position?.start.line ?? 1) - 1, (node.position?.end.line ?? 0) - (node.position?.start.line ?? 0) + 1)
+		.splice((node.position?.start.line ?? 1) - 1, 1 + (node.position?.end.line ?? 0) - (node.position?.start.line ?? 0))
 		.map((line, i, arr) => (i === 0
 			? line.substring(
 				(node.position?.start.column ?? 1) - 1,
-				node.position?.start.line === node.position?.end.line ? node.position?.end.column : undefined
+				node.position?.start.line === node.position?.end.line ? (node.position?.end.column ?? 1) - 1 : undefined
 			)
 			: i === arr.length
 				? line.substring(
 					0,
-					node.position?.end.column
+					(node.position?.end.column ?? 1) - 1
 				)
 				: line
 		))
 		.join('\n');
+	console.log(node.type, textContent);
 	const content = { ...node, children: ('children' in node ? node.children : []).map(item => putTextContent(item, texts)), text: textContent };
 	return content;
 }

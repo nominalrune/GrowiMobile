@@ -1,7 +1,5 @@
 import { View, Text } from 'react-native';
-import {
-	PhrasingContent as PhrasingContentType,
-} from 'mdast';
+
 import Node from './FlowContent';
 import { Fragment } from 'react';
 import Strong from './Strong';
@@ -9,18 +7,19 @@ import Html from './Html';
 import Image from './Image';
 import Link from './Link';
 import InlineCode from './InlineCode';
+import WithText from '../../types/WithText';
+import PhrasingContentType from '../../types/PhrasingContentType';
 
-interface Prop{
-	node: PhrasingContentType; 
+interface Prop {
+	node: PhrasingContentType;
 }
-export default function PhrasingContent({node}:Prop){
-	console.log(node)
+export default function PhrasingContent({ node }: Prop) {
 	// return <Text>{node.text}</Text>;
-	switch (node.type){
+	switch (node.type) {
 		case 'break':
-			return <Text>---{`\n`}</Text>;
-		case 'delete':
-			return <Text>~~{node.children.map(item=><PhrasingContent node={item}/>)}~~</Text>;
+			return <Text area-type={node.type}>{node.text}</Text>;
+		case 'delete': // TODO
+			return <Text>~~{node.children.map(item => <PhrasingContent node={item as PhrasingContentType} />)}~~</Text>;
 		case 'emphasis':
 		case 'strong':
 			return <Text><Strong node={node} /></Text>;
@@ -35,7 +34,7 @@ export default function PhrasingContent({node}:Prop){
 		case 'text':
 			return <Text>{node.value}</Text>;
 		default:
-			return <Text>(reference)</Text>
+			return <Text>(reference)</Text>;
 	}
-	return <></>
+	return <></>;
 }

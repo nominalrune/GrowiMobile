@@ -2,13 +2,12 @@ import { Paragraph as ParagraphType } from "mdast";
 import { Text, View } from 'react-native';
 import PhrasingContent from './PhrasingContent';
 import { Fragment } from 'react';
-export default function Paragraph({ node, prefix }: {
-	node: ParagraphType;
-	prefix?: string;
+import WithText from '../../types/WithText';
+export default function Paragraph({ node }: {
+	node: WithText<ParagraphType>;
 }) {
 	return <Text>{
 		node.children.map((child,i) => <Fragment key={i}>
-			<Text>{prefix}</Text>
 			<PhrasingContent node={child} />
 		</Fragment>)
 	}{`\n`}</Text>;
