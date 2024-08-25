@@ -5,11 +5,12 @@ import WithText from '../../types/WithText';
 import PhrasingContentType from '../../types/PhrasingContentType';
 
 export default function Heading({ node }: { node: WithText<HeadingType>; }) {
-	const match = node.text.match(/^[ \t]*#+ /);
-	const mark = match?.[0] ?? '';
+	const match = node.text.match(/^([ \t]*#+ )?(.*?)$/);
+	const mark = match?.[1] ?? '';
+	const rest = match?.[2] ?? '';
 	return <Text className={`${node.depth === 1 ? 'text-2xl' : node.depth === 2 ? "text-xl" : "text-lg"}`}>
 		<Text className='text-slate-400/80 font-extrabold'>{mark}</Text>
-		{node.text}
+		{rest}
 		{/* {node.children.map((item, i) => <PhrasingContent key={i} node={item as PhrasingContentType} />)} */}
 		{'\n'}
 	</Text>;

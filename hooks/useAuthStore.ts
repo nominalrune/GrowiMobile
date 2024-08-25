@@ -16,12 +16,13 @@ export default function useAuthStore() {
 	}
 	async function set(url: string, token: string) {
 		console.log('useAuthStore, save', url, token);
-		await storage.set("url", url);
+		await storage.set("url", url.replace(/\/$/, ''));
 		await secureStore.set("token", token);
 		if (_set) _set(url, token);
 		console.log('also set to the context');
 	}
-	async function checkAndSave(url: string, token: string) {
+	async function checkAndSave(_url: string, token: string) {
+		const url = _url.replace(/\/$/,'');
 		console.log('useAuthStore, check', url, token);
 		const api = new GrowiAPI(url, token);
 		try {

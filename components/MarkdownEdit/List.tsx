@@ -4,17 +4,17 @@ import { FlatList, Text, View } from 'react-native';
 import Paragraph from './Paragraph';
 import { useState } from 'react';
 import WithText from '../../types/WithText';
-export default function List({ node, }: { node: WithText<ListType>; }) {
+export default function List({ node, prefix }: { node: WithText<ListType>; prefix?:string; }) {
 	// return <Text>{node.text}</Text>
 	return <Text className="flex flex-col justify-start">
 		{
-			node.children.map((item, i) => <ListItem key={i} node={item} />)
+			node.children.map((item, i) => <ListItem key={i} node={item} prefix={prefix} />)
 		}
 	</Text>;
 }
 
-function ListItem({ node }: { node: WithText<ListItemType>; }) {
-	const match = node.text.match(/(^[ \t]*)((?:[\-\*]|(?:\d+.)) )(\[[x ]\] )?(.*)$/s);
+function ListItem({ node, prefix:_prefix }: { node: WithText<ListItemType>; prefix?:string;}) {
+	const match = node.text.match(/^([ \t]*)((?:[\-\*]|(?:\d+.)) )?(\[[x ]\] )?(.*)$/);
 	const prefix = match?.[1] ?? '';
 	const mark = match?.[2] ?? '';
 	const checkmark = match?.[3] ?? '';
@@ -23,8 +23,10 @@ function ListItem({ node }: { node: WithText<ListItemType>; }) {
 	const paragraph = children.shift();
 	const itemText = paragraph ? <FlowContent node={paragraph} /> : <Text>{`\n`}</Text>
 	// return <Text>{node.text}{`\n`}</Text>
+	console.log('LISTITEM: text:'+node.text,'prefix|'+prefix+'|')
 	return <>
 		<Text className='text-slate-400/80 font-extrabold'>
+			{_prefix}
 			{prefix}
 			{mark}
 			{node.checked !== null && (checkmark === '[x] '
@@ -32,15 +34,15 @@ function ListItem({ node }: { node: WithText<ListItemType>; }) {
 				: <>{checkmark}</>
 			)}
 		</Text>
-		{/* {itemText} */}
-		<Text>{rest}{`\n`}</Text>
+		{itemText}
+		{/* <Text>{rest}{`\n`}</Text> */}
 		{/* <Text className='text-black'>
 			{paragraph ? <FlowContent node={paragraph} /> : <Text>{`\n`}</Text>}
 		</Text> */}
-		{/* {
+		{
 			!!children.length
-				? children.map((item, i) => <FlowContent key={i} node={item} />)
+				? children.map((item, i) => <Text key={i}>{prefix}<FlowContent node={item} prefix={_prefix+prefix}/></Text>)
 				: <></>
-		} */}
+		}
 	</>;
 }

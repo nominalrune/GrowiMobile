@@ -8,17 +8,17 @@ import useUser from '../../hooks/useUser';
 export default function User() {
 	const { get } = useAuthStore();
 	const [s, setS] = useState<{ url: string, token: string; }>();
-	const {user}=useUser();
+	const { user } = useUser();
 	useEffect(() => {
 		get().then(r => {
 			setS(r);
 		});
 	}, []);
 	return <View className='flex m-2 mx-4 '>
-		{user?<>
-		<Text>{user.name}</Text>
-		<Image src={user.imageUrlCached} />
-		</>:<Text>loading</Text>}
+		{user ? <>
+			<Text className='text-lg'>{user.name}</Text>
+			<Image className='m-2 border shadow' source={{ uri: user.imageUrlCached }} alt='user_icon' />
+		</> : <Text>loading</Text>}
 		<Text>url: <Link className='text-blue-700 underline' href={s?.url ?? ''}>{s?.url}</Link></Text>
 		<Text>token: {s?.token}</Text>
 		<Button onPress={() => router.push('user/login')}><Text>login</Text></Button>

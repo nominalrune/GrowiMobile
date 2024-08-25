@@ -45,8 +45,9 @@ type FlowContentType =
 	| WithText<TableType> | WithText<FootnoteDefinitionType>;
 interface Prop {
 	node: FlowContentType;
+	prefix?:string
 }
-export default function FlowContent({ node, }: Prop) {
+export default function FlowContent({ node, prefix }: Prop) {
 	switch (node.type) {
 		case 'blockquote':
 			return <Blockquote node={node} />;
@@ -57,7 +58,7 @@ export default function FlowContent({ node, }: Prop) {
 		case 'html':
 			return <Html node={node} />;
 		case 'list':
-			return <><List node={node} /></>;
+			return <><List node={node} prefix={prefix} /></>;
 		case 'paragraph':
 			return <Paragraph node={node} />;
 		case 'table':
