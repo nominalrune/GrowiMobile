@@ -1,10 +1,9 @@
-import { router, useLocalSearchParams } from 'expo-router';
+import { Stack, router, useLocalSearchParams } from 'expo-router';
 import { KeyboardAvoidingView, Platform, ScrollView, Text, View } from 'react-native';
 import Button from '../../components/Base/Button';
 import usePage from '../../hooks/usePage';
-import Layout from '../ _layout';
 import Parser from '../../services/Markdown/Parser';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import Root from '../../components/Markdown/Root';
 import RootEdit from '../../components/MarkdownEdit/Root';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
@@ -16,32 +15,59 @@ export default function Page() {
   const path = `/${[...rest].join('/')}`;
   const { page, update, save, undo, redo, reset } = usePage(path);
   const [isEdit, setIsEdit] = useState(false);
-  function indent() { }
-  function outdent() { }
-  // const [content,setContent] = useState<RootType>();
-  // useEffect(()=>{
-  //   if(!page) return;
-  //   Parser.parse(page.revision.body ?? '')
-  // },[page]);
+  const selection = useRef({ start: 0, end: 0, });
   const content = useMemo(() => {
-    // if (page) {
-    //  console.log(JSON.stringify(Parser.parse(page.revision.body), null, 2));
-    // }
-    return page ? Parser.parse(page.revision.body) : undefined;
+    return Parser.parse(page?.revision.body ?? '');
   }, [page]);
-  return <Layout>
-    <View className='bg-slate-100 flex flex-row'>
-      <View className='m-4 my-2'>
-        <Text className='text-2xl text-slate-700'>{rest.at(-1)}</Text>
-        <Text className='text-slate-400'>{path}</Text>
-        <Text>{String(isEdit)}</Text>
-      </View>
-      {isEdit && <Button onPress={() => { setIsEdit(false); reset(); }}><Text>Back</Text></Button>}
-    </View>
+  function getLine(cursor: number) {
+    if (!page) { return ''; }
+    // if (!page || cursor === 0) { return 0; }
+    const body = page.revision.body;
+    let alt = body.substring(0, cursor) + '=#_$CURSOR@?-~' + body.substring(cursor);
+    const splitted = alt.split('\n');
+    const lineNo = splitted.findIndex(line => /^.*?=#_\$CURSOR@\?-~.*?$/.test(line));
+    return lineNo;
+    // if (body.length <= cursor) { return body.length; }
+    let before = body.substring(0, cursor);
+    if (before.lastIndexOf('\n') !== -1) before = before.substring(before.lastIndexOf('\n') + 1);
+    let after = body.substring(cursor);
+    if (after.indexOf('\n') !== -1) after = after.substring(0, after.indexOf('\n'));
+    return before + after;
+  }
+  function indent() {
+    if (!page) { return ''; }
+    const lineNo = getLine(selection.current.start);
+    let body = page.revision.body;
+    let lines = body.split('\n').map((line,i)=>i===lineNo?`  ${line}`:line);
+    return update(lines.join('\n'));
+  }
+  function outdent() { 
+    if (!page) { return ''; }
+    const lineNo = getLine(selection.current.start);
+    let body = page.revision.body;
+    let lines = body.split('\n').map((line,i)=>i===lineNo?line.replace(/^  /,''):line);
+    return update(lines.join('\n'));
+  }
+  return <>
+    <Stack.Screen
+      options={{
+        headerTitle: () => <View className='flex flex-row'>
+          <View className='my-2'>
+            <Text className='text-2xl text-slate-700'>{rest.at(-1)}</Text>
+            <Text className='text-slate-400/90'>{path}</Text>
+          </View>
+          <View className='bg-slate-100 flex flex-row'>
+            {isEdit && <Button onPress={() => { setIsEdit(false); reset(); }}><Text>Back</Text></Button>}
+          </View>
+        </View>,
+      }}
+    />
     <ScrollView>
-      {page && content && (
+      {page && content?.type === 'root' && (
         isEdit
-          ? <RootEdit content={page.revision.body} update={update} />
+          ? <RootEdit
+            setSelection={(s) => { selection.current = s; console.log('line:', getLine(s.start)); }}
+            content={page.revision.body} update={update} />
           : <Root node={content} />
       )}
     </ScrollView>
@@ -52,13 +78,9 @@ export default function Page() {
       {
         isEdit ? <>
           <IconButton onPress={undo}><FontAwesome name="undo" size={24} color="gray" /></IconButton>
-          <View className='rounded h-10 bg-slate-300'><Text> </Text></View>
           <IconButton onPress={redo}><FontAwesome name="repeat" size={24} color="gray" /></IconButton>
-          <View className='rounded h-10 bg-slate-300'><Text> </Text></View>
           <IconButton onPress={outdent}><FontAwesome name="outdent" size={24} color="gray" /></IconButton>
-          <View className='rounded h-10 bg-slate-300'><Text> </Text></View>
           <IconButton onPress={indent}><FontAwesome name="indent" size={24} color="gray" /></IconButton>
-
           <PrimaryButton onPress={() => save()}><Text>Save</Text></PrimaryButton>
         </>
           : <>
@@ -71,7 +93,5 @@ export default function Page() {
           </>
       }
     </KeyboardAvoidingView>
-    <View>
-    </View>
-  </Layout>;
+  </>;
 }

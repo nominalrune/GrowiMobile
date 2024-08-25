@@ -11,8 +11,8 @@ export default function usePage(path: string) {
 	// const [page, setPage] = useState<PageContent>();
 	const { current, push, undo, redo, reset } = useHistory<PageContent>();
 	const [api, setApi] = useState<GrowiAPI>();
+	const { getApi } = useAuthStore();
 	async function initialize() {
-		const { getApi } = useAuthStore();
 		const api = await getApi();
 		setApi(api);
 		const result = await api.fetchDocumentContent(path);

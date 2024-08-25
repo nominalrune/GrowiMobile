@@ -1,11 +1,15 @@
 import { Root as RootType } from "mdast";
 import { NativeSyntheticEvent, ScrollView, Text, TextInput, TextInputChangeEventData, TextInputKeyPressEventData, View } from 'react-native';
-import { useMemo, useRef, useState } from 'react';
+import { RefObject, useMemo, useRef, useState } from 'react';
 import Parser from '../../services/Markdown/Parser';
 import FlowContent from './FlowContent';
-export default function Root({ content, update }: { content: string; update: (context: string) => void; }) {
+interface Prop{ 
+	content: string; 
+	update: (context: string) => void;
+	setSelection:(selection:{start:number, end:number})=>void;
+}
+export default function Root({ content, update, setSelection }:Prop ) {
 	const inputRef = useRef<TextInput>(null);
-	const selection = useRef<{start:number,end:number}>({start:0,end:0})
 	const [enterKeyPressed, setPressed] = useState(false);
 	function handlePressed(event: NativeSyntheticEvent<TextInputKeyPressEventData>) {
 		if (event.nativeEvent.key === 'Enter') {
@@ -14,7 +18,7 @@ export default function Root({ content, update }: { content: string; update: (co
 	}
 	function handleSelectionChange(e) {
 		console.log('selection change', e.nativeEvent.selection);
-		selection.current = e.nativeEvent.selection;
+		setSelection(e.nativeEvent.selection);
 	}
 	function handleChange(e: NativeSyntheticEvent<TextInputChangeEventData>) {
 		const target = e.currentTarget.getNativeRef();
@@ -33,7 +37,6 @@ export default function Root({ content, update }: { content: string; update: (co
 			console.log(i, "altered:", "curr", spaces + line, "prev", prev[i]);
 			return spaces + line;
 		});
-		// target.selection=({ start: selection.current.start - 1, end: selection.current.end - 1 });
 		update(altered.join('\n'));
 		setPressed(false);
 	}
