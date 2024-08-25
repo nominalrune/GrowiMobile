@@ -1,6 +1,6 @@
 import { Root as RootType } from "mdast";
 import { NativeSyntheticEvent, ScrollView, Text, TextInput, TextInputChangeEventData, TextInputKeyPressEventData, View } from 'react-native';
-import { RefObject, useMemo, useRef, useState } from 'react';
+import { RefObject, useEffect, useMemo, useRef, useState } from 'react';
 import Parser from '../../services/Markdown/Parser';
 import FlowContent from './FlowContent';
 interface Prop{ 
@@ -41,6 +41,9 @@ export default function Root({ content, update, setSelection }:Prop ) {
 		setPressed(false);
 	}
 	const contentNode = useMemo(() => Parser.parse(content), [content]);
+	useEffect(()=>{
+		console.log(JSON.stringify(contentNode))
+	},[contentNode])
 	return <View className=''>
 		<TextInput
 			ref={inputRef}

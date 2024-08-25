@@ -32,7 +32,7 @@ export default function PhrasingContent({ node }: Prop) {
 		case 'inlineCode':
 			return <InlineCode node={node} />;
 		case 'text':
-			return <Text>{node.value}</Text>;
+			return <Text>{node.text}</Text>;
 		default:
 			return <Text>(reference)</Text>;
 	}

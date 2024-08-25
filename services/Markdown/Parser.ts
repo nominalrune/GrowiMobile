@@ -36,5 +36,6 @@ function putTextContent(node: Nodes, texts: string[]): NodeWithText {
 		.join('\n');
 	console.log(node.type, textContent);
 	const content = { ...node, children: ('children' in node ? node.children : []).map(item => putTextContent(item, texts)), text: textContent };
+	// delete content.position;
 	return content;
 }
