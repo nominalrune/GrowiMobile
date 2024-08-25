@@ -1,4 +1,4 @@
-import { Root as RootType } from "mdast";
+// import { Root as RootType } from "mdast";
 import { NativeSyntheticEvent, ScrollView, Text, TextInput, TextInputChangeEventData, TextInputKeyPressEventData, View } from 'react-native';
 import { RefObject, useEffect, useMemo, useRef, useState } from 'react';
 import Parser from '../../services/Markdown/Parser';
@@ -54,7 +54,7 @@ export default function Root({ content, update, setSelection }:Prop ) {
 			onSelectionChange={handleSelectionChange}
 			onKeyPress={handlePressed}
 		>
-			{contentNode.children?.map((node, i) => <FlowContent key={i} node={node} />)}
+			{contentNode?.map((node, i) => <FlowContent key={i} node={node} />)}
 		</TextInput>
 	</View>;
 }

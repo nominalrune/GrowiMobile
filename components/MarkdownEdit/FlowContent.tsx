@@ -13,9 +13,11 @@ import Table from './Table';
 import { Text, View } from 'react-native';
 import WithText from '../../types/WithText';
 import FlowContentType from '../../types/FlowContentType';
+import { Token } from 'marked';
 
 interface Prop {
-	node: FlowContentType;
+	// node: FlowContentType;
+	node:Token
 	prefix?:string
 }
 export default function FlowContent({ node, prefix }: Prop) {
@@ -35,6 +37,6 @@ export default function FlowContent({ node, prefix }: Prop) {
 		case 'table':
 			return <Table node={node} />;
 		default:
-			return <Text>{node.text}</Text>;
+			return <Text>{node.raw}</Text>;
 	}
 }

@@ -3,9 +3,10 @@ import { Text, View } from 'react-native';
 import PhrasingContent from './PhrasingContent';
 import WithText from '../../types/WithText';
 import PhrasingContentType from '../../types/PhrasingContentType';
+import { Tokens } from 'marked';
 
-export default function Heading({ node }: { node: WithText<HeadingType>; }) {
-	const match = node.text.match(/^([ \t]*#+ )?(.*?)$/);
+export default function Heading({ node }: { node: Tokens.Heading; }) {
+	const match = node.raw.match(/^([ \t]*#+ )?(.*?)$/);
 	const mark = match?.[1] ?? '';
 	const rest = match?.[2] ?? '';
 	return <Text className={`${node.depth === 1 ? 'text-2xl' : node.depth === 2 ? "text-xl" : "text-lg"}`}>
