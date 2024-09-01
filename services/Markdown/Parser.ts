@@ -4,8 +4,9 @@
 // import remarkStringify from 'remark-stringify';
 // import { unified } from 'unified';
 import NodeWithText from './NodeWithText';
-import { TokensList } from 'marked';
-import * as marked from 'marked';
+import { TokensList } from 'lib/marked';
+import * as marked from 'lib/marked';
+// import * as marked from 'lib/marked/libs/marked';
 
 export default class Parser {
 	static parse(input: string) {

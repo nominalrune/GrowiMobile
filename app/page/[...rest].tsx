@@ -63,12 +63,13 @@ export default function Page() {
       }}
     />
     <ScrollView>
-      {page && content?.type === 'root' && (
+      {page && (
         isEdit
           ? <RootEdit
             setSelection={(s) => { selection.current = s; console.log('line:', getLine(s.start)); }}
             content={page.revision.body} update={update} />
-          : <Root node={content} />
+          : <Text>{page.revision.body}</Text>
+          // : (content.type==='root'? <Root node={content} />:<Text>{page.revision.body}</Text>)
       )}
     </ScrollView>
     <KeyboardAvoidingView

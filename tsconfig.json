@@ -4,8 +4,17 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "paths": {
+      "lib/*": [
+        "./lib/*"
+      ]
+    }
   },
-  "exclude": ["node_modules", "babel.config.cjs", "metro.config.mjs"],
+  "exclude": [
+    "node_modules",
+    "babel.config.cjs",
+    "metro.config.mjs"
+  ],
   "extends": "expo/tsconfig.base"
 }

@@ -21,6 +21,20 @@ export default function PhrasingContent({ node }: Prop) {
 		// 	return <Text area-type={node.type}>{node.text}</Text>;
 		// case 'delete': // TODO
 		// 	return <Text>~~{node.tokens.map(item => <PhrasingContent node={item as PhrasingContentType} />)}~~</Text>;
+		case 'blockquote':
+			return <Blockquote node={node} />;
+		case 'code':
+			return <><Code node={node} /></>;
+		case 'heading':
+			return <Heading node={node} />;
+		case 'html':
+			return <Html node={node} />;
+		case 'list':
+			return <><List node={node} prefix={prefix} /></>;
+		case 'paragraph':
+			return <Paragraph node={node} prefix={prefix} />;
+		case 'table':
+			return <Table node={node} />;
 		case 'em':
 		case 'strong':
 			return <Text><Strong node={node} /></Text>;
@@ -30,12 +44,10 @@ export default function PhrasingContent({ node }: Prop) {
 			return <Image node={node} />;
 		case 'link':
 			return <Link node={node} />;
-		// case 'inlineCode':
-		// 	return <InlineCode node={node} />;
 		case 'text':
 			return <Text>{node.text}</Text>;
 		default:
-			return <Text>(reference)</Text>;
+			return <Text>{node.raw}</Text>;
 	}
 	return <></>;
 }

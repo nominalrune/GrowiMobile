@@ -37,11 +37,11 @@ function ListItem({ node, prefix: _prefix = '' }: { node: Tokens.ListItem; prefi
 				: <>{checkmark}</>
 			)}
 		</Text>
-		{node.text}
-		{/* {itemText} */}
+		<FlowContent node={paragraph} prefix={''} />
+		{/* {`\n`} */}
 		{/* {(match?.[5] ?? "")} */}
 		{
-			node.tokens.map((item, i) => <Text key={i}>
+			children.map((item, i) => <Text key={i}>
 					<FlowContent node={item} prefix={_prefix + prefix+ '  '} />
 				</Text>)
 		}
