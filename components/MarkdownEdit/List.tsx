@@ -21,10 +21,10 @@ function ListItem({ node, prefix: _prefix = '' }: { node: Tokens.ListItem; prefi
 	const mark = match?.[2] ?? '';
 	const checkmark = match?.[3] ?? '';
 	const rest = match?.[4] ?? "";
-	const nextPrefix = (match?.[5] ?? "").match(matchReg)?.[1]??'';
+	const nextPrefix = (match?.[5] ?? "").match(matchReg)?.[1] ?? '';
 	const children = [...node.tokens];
 	const paragraph = children.shift();
-	const itemText = paragraph?.type==='paragraph' ? <Paragraph node={paragraph} /> : <Text>{`\n`}</Text>;
+	const itemText = paragraph?.type === 'paragraph' ? <Paragraph node={paragraph} /> : <Text>{`\n`}</Text>;
 	// return <Text>{node.text}{`\n`}</Text>
 	// console.log('LISTITEM: text:' + node.text, '_prefix|' + _prefix + '|', 'prefix|' + prefix + '|');
 	return <>
@@ -37,13 +37,14 @@ function ListItem({ node, prefix: _prefix = '' }: { node: Tokens.ListItem; prefi
 				: <>{checkmark}</>
 			)}
 		</Text>
-		<FlowContent node={paragraph} prefix={''} />
-		{/* {`\n`} */}
+		{paragraph
+			? <FlowContent node={paragraph} prefix={''} />
+			: `\n`}
 		{/* {(match?.[5] ?? "")} */}
 		{
 			children.map((item, i) => <Text key={i}>
-					<FlowContent node={item} prefix={_prefix + prefix+ '  '} />
-				</Text>)
+				<FlowContent node={item} prefix={_prefix + prefix + '  '} />
+			</Text>)
 		}
 		{/* {
 			!!children.length
