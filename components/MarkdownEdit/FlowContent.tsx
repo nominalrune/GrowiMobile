@@ -13,7 +13,7 @@ import Table from './Table';
 import { Text, View } from 'react-native';
 import WithText from '../../types/WithText';
 import FlowContentType from '../../types/FlowContentType';
-import { MarkedToken, Token } from 'marked';
+import { MarkedToken, Token } from 'lib/marked';
 
 interface Prop {
 	// node: FlowContentType;
@@ -48,7 +48,10 @@ export default function FlowContent({ node, prefix }: Prop) {
 		// case 'inlineCode':
 		// 	return <InlineCode node={node} />;
 		case 'text':
-			return <Text>{node.text}</Text>;
+			return <Text>{'tokens' in node 
+				? node.tokens?.map((token, i) => <FlowContent key={i} node={token} />) 
+				: <Html node={node} />
+				}</Text>;
 		default:
 			return <Text>{node.raw}</Text>;
 	}

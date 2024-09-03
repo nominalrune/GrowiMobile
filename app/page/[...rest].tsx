@@ -16,9 +16,6 @@ export default function Page() {
   const { page, update, save, undo, redo, reset } = usePage(path);
   const [isEdit, setIsEdit] = useState(false);
   const selection = useRef({ start: 0, end: 0, });
-  const content = useMemo(() => {
-    return Parser.parse(page?.revision.body ?? '');
-  }, [page]);
   function getLine(cursor: number) {
     if (!page) { return ''; }
     // if (!page || cursor === 0) { return 0; }
@@ -28,24 +25,24 @@ export default function Page() {
     const lineNo = splitted.findIndex(line => /^.*?=#_\$CURSOR@\?-~.*?$/.test(line));
     return lineNo;
     // if (body.length <= cursor) { return body.length; }
-    let before = body.substring(0, cursor);
-    if (before.lastIndexOf('\n') !== -1) before = before.substring(before.lastIndexOf('\n') + 1);
-    let after = body.substring(cursor);
-    if (after.indexOf('\n') !== -1) after = after.substring(0, after.indexOf('\n'));
-    return before + after;
+    // let before = body.substring(0, cursor);
+    // if (before.lastIndexOf('\n') !== -1) before = before.substring(before.lastIndexOf('\n') + 1);
+    // let after = body.substring(cursor);
+    // if (after.indexOf('\n') !== -1) after = after.substring(0, after.indexOf('\n'));
+    // return before + after;
   }
   function indent() {
     if (!page) { return ''; }
     const lineNo = getLine(selection.current.start);
     let body = page.revision.body;
-    let lines = body.split('\n').map((line,i)=>i===lineNo?`  ${line}`:line);
+    let lines = body.split('\n').map((line, i) => i === lineNo ? `  ${line}` : line);
     return update(lines.join('\n'));
   }
-  function outdent() { 
+  function outdent() {
     if (!page) { return ''; }
     const lineNo = getLine(selection.current.start);
     let body = page.revision.body;
-    let lines = body.split('\n').map((line,i)=>i===lineNo?line.replace(/^  /,''):line);
+    let lines = body.split('\n').map((line, i) => i === lineNo ? line.replace(/^  /, '') : line);
     return update(lines.join('\n'));
   }
   return <>
@@ -69,7 +66,7 @@ export default function Page() {
             setSelection={(s) => { selection.current = s; console.log('line:', getLine(s.start)); }}
             content={page.revision.body} update={update} />
           : <Text>{page.revision.body}</Text>
-          // : (content.type==='root'? <Root node={content} />:<Text>{page.revision.body}</Text>)
+        // : (content.type==='root'? <Root node={content} />:<Text>{page.revision.body}</Text>)
       )}
     </ScrollView>
     <KeyboardAvoidingView

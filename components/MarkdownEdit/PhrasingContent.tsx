@@ -9,7 +9,7 @@ import Link from './Link';
 import InlineCode from './InlineCode';
 import WithText from '../../types/WithText';
 import PhrasingContentType from '../../types/PhrasingContentType';
-import { MarkedToken, Token } from 'marked';
+import { MarkedToken, Token } from 'lib/marked';
 
 interface Prop {
 	node: MarkedToken;

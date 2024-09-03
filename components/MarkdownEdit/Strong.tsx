@@ -3,7 +3,7 @@ import { Text, View } from 'react-native';
 import PhrasingContent from './PhrasingContent';
 import WithText from '../../types/WithText';
 import PhrasingContentType from '../../types/PhrasingContentType';
-import { Tokens } from 'marked';
+import { Tokens } from 'lib/marked';
 export default function Strong({ node }: { node: Tokens.Em | Tokens.Strong; }) {
 	// return <Text className='font-semibold'>{node.text}</Text>
 	const match = node.raw.match(/^((?:\*\*)|(?:__)).*?((?:\*\*)|(?:__))$/);

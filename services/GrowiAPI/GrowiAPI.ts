@@ -28,7 +28,7 @@ export default class GrowiAPI {
 			throw new Error('login failed: ' + loginResponse.statusText + ", body: " + await loginResponse.text());
 		}
 		const userResponse = await fetch(getUrl('personal-setting'));
-		const user = (await userResponse.json()).currentUser as CurrentUserResponse;
+		const user = (await userResponse.json()).currentUser as CurrentUserResponse['currentUser'];
 		console.log("me result", userResponse);
 		return user;
 	}

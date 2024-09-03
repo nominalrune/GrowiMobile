@@ -22,10 +22,10 @@ export default function useUser() {
 		return () => { clearInterval(i); };
 	}, []);
 	async function fetchUser() {
-		if (!api) throw new Error('api no set');
+		if (!api) throw new Error('api not set');
 		const url = (await storage.get('url')) ?? '';
 		const _user = (await api.fetchUser()).currentUser;
-		const user = { ..._user, imageUrlCached: url.replace(/\/$/, '') + _user.imageUrlCached, apiToken: undefined };
+		const user = { ..._user, imageUrlCached: url.replace(/\/$/, '') + _user?.imageUrlCached, apiToken: undefined };
 		await storage.set('user', user);
 		setUser(user);
 		return user;

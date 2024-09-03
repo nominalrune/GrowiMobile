@@ -9,6 +9,6 @@ export default function Blockquote({ node }: {
 	return <Text>
 		<Text className='text-slate-400/80 font-extrabold'>{`> `}</Text> 
 			{node.tokens.map((item, i) => <FlowContent key={i} node={item as Token} />)}
-		{'\n'}
+		{`\n`}
 	</Text>;
 }

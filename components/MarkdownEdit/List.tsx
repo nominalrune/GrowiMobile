@@ -4,7 +4,7 @@ import { FlatList, Text, View } from 'react-native';
 import Paragraph from './Paragraph';
 import { useState } from 'react';
 import WithText from '../../types/WithText';
-import { Tokens } from 'marked';
+import { Tokens } from 'lib/marked';
 export default function List({ node, prefix }: { node: Tokens.List; prefix?: string; }) {
 	// return <Text>{node.text}</Text>
 	return <Text className="flex flex-col justify-start">
