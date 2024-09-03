@@ -1,0 +1,52 @@
+{
+	"build": {
+		"base": {
+			"node": "22.2.0",
+			"npm": "10.7.0",
+			"env": {
+			},
+			"android": {
+				"image": "default",
+				"env": {
+					"PLATFORM": "android"
+				}
+			},
+			"ios": {
+				"image": "latest",
+				"env": {
+					"PLATFORM": "ios"
+				}
+			}
+		},
+		"development": {
+			"extends": "base",
+			"developmentClient": true,
+			"env": {
+				"ENVIRONMENT": "development"
+			},
+			"android": {
+				"distribution": "internal",
+				"withoutCredentials": true
+			},
+			"ios": {
+				"simulator": true
+			}
+		},
+		"staging": {
+			"extends": "base",
+			"env": {
+				"ENVIRONMENT": "staging"
+			},
+			"distribution": "internal",
+			"android": {
+				"buildType": "apk"
+			}
+		},
+		"production": {
+			"extends": "base",
+			"env": {
+				"ENVIRONMENT": "production"
+			}
+		}
+	}
+}
