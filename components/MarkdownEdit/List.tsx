@@ -38,7 +38,7 @@ function ListItem({ node, prefix: _prefix = '' }: { node: Tokens.ListItem; prefi
 			)}
 		</Text>
 		{paragraph
-			? <FlowContent node={paragraph} prefix={''} />
+			? <><FlowContent node={paragraph} prefix={''} /><Text>{`\n`}</Text></>
 			: `\n`}
 		{/* {(match?.[5] ?? "")} */}
 		{

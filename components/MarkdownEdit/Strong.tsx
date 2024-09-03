@@ -10,7 +10,7 @@ export default function Strong({ node }: { node: Tokens.Em | Tokens.Strong; }) {
 	const prefix = match?.[1] ?? '';
 	const suffix = match?.[2] ?? '';
 	return <Text className='font-semibold'>
-		<Text  className='text-slate-400/80 font-extrabold'>{prefix}</Text>
+		<Text className='text-slate-400/80 font-extrabold'>{prefix}</Text>
 		{node.tokens.map((item, i) => <PhrasingContent key={i} node={item} />)}
 		<Text className='text-slate-400/80 font-extrabold'>{suffix}</Text>
 	</Text>;

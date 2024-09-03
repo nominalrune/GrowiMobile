@@ -14,6 +14,7 @@ import { Text, View } from 'react-native';
 import WithText from '../../types/WithText';
 import FlowContentType from '../../types/FlowContentType';
 import { MarkedToken, Token } from 'lib/marked';
+import CodeSpan from './CodeSpan';
 
 interface Prop {
 	// node: FlowContentType;
@@ -26,6 +27,8 @@ export default function FlowContent({ node, prefix }: Prop) {
 			return <Blockquote node={node} />;
 		case 'code':
 			return <><Code node={node} /></>;
+		case 'codespan':
+			return <><CodeSpan node={node} /></>;
 		case 'heading':
 			return <Heading node={node} />;
 		case 'html':
@@ -52,6 +55,8 @@ export default function FlowContent({ node, prefix }: Prop) {
 				? node.tokens?.map((token, i) => <FlowContent key={i} node={token} />) 
 				: <Html node={node} />
 				}</Text>;
+			case 'space':
+				return <Text>{`${node.raw.replace(/\n\n/, `\n`)}`}</Text>
 		default:
 			return <Text>{node.raw}</Text>;
 	}

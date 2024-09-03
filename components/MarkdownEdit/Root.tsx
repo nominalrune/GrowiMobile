@@ -13,7 +13,7 @@ export default function Root({ content, update, setSelection }:Prop ) {
 	const contentNode = useMemo(() => Parser.parse(content), [content]);
 	useEffect(()=>{
 		console.log(JSON.stringify(contentNode))
-	},[contentNode]);
+	}, [contentNode]);
 	const [enterKeyPressed, setPressed] = useState(false);
 	function handlePressed(event: NativeSyntheticEvent<TextInputKeyPressEventData>) {
 		if (event.nativeEvent.key === 'Enter') {
@@ -26,16 +26,16 @@ export default function Root({ content, update, setSelection }:Prop ) {
 	}
 	function handleChange(e: NativeSyntheticEvent<TextInputChangeEventData>) {
 		const text = e.nativeEvent.text;
-		if (!enterKeyPressed) {
+		// if (!enterKeyPressed) {
 			update(text);
 			return;
-		}
+		// }
 	}
 	return <View className=''>
 		<TextInput
 			ref={inputRef}
 			multiline
-			className='p-2'
+			className='p-2 bg-white h-full'
 			style={{ fontFamily: 'monospace' }}
 			onChange={handleChange}
 			onSelectionChange={handleSelectionChange}
