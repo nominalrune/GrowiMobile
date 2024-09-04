@@ -54,16 +54,16 @@ export default function Page() {
             <Text className='text-slate-400/90'>{path}</Text>
           </View>
           <View className='bg-slate-100 flex flex-row'>
-            {isEdit && <Button onPress={() => { setIsEdit(false); reset(); }}><Text>Back</Text></Button>}
+            {isEdit && <Button onPress={() => { setIsEdit(false); }}><Text>Back</Text></Button>}
           </View>
         </View>,
       }}
     />
     <ScrollView>
-      {page && ( <RootEdit
+      {page && ( isEdit?<RootEdit
             setSelection={(s) => { selection.current = s; console.log('line:', getLine(s.start)); }}
             content={page.revision.body} update={update} />
-        // : (content.type==='root'? <Root node={content} />:<Text>{page.revision.body}</Text>)
+        : <Root content={page.revision.body} />
       )}
     </ScrollView>
     <KeyboardAvoidingView

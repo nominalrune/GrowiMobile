@@ -1,8 +1,17 @@
 import { Paragraph as ParagraphType } from "mdast";
 import { Text, View } from 'react-native';
-import Node from './Node';
-import Block from './Block';
-import Inline from './Inline';
-export default function Paragraph({ node, className }: { node: ParagraphType; className?:string }) {
-	return <Inline className={className} node={node}/>;
+import PhrasingContent from './PhrasingContent';
+import { Fragment } from 'react';
+import WithText from '../../types/WithText';
+import { Tokens } from 'marked';
+export default function Paragraph({ node, prefix='' }: {
+	node: Tokens.Paragraph;
+	prefix?:string;
+}) {
+	return <Text>{
+		node.tokens.map((child,i) => <Fragment key={i}>
+			<Text>{prefix}</Text>
+			<PhrasingContent node={child} />
+		</Fragment>)
+	}{`\n`}</Text>;
 }

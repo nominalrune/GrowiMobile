@@ -1,37 +1,34 @@
 import { ListItem as ListItemType, List as ListType, Paragraph as ParagraphType } from "mdast";
-import Node from './Node';
+import FlowContent from './FlowContent';
 import { FlatList, Text, View } from 'react-native';
 import Paragraph from './Paragraph';
-import Checkbox from 'expo-checkbox';
 import { useState } from 'react';
-export default function List({ node }: { node: ListType; }) {
-	return <View className="flex flex-col justify-start">{
-		node.children.map((item, i) => <ListItem key={i} mark={node.ordered ? `${i + 1}.` : '・'} node={item} />)
-	}</View>;
-	// return <FlatList
-	// 	data={node.children}
-	// 	renderItem={({ item, index }) => <ListItem key={index} mark={node.ordered ? `${index}. ` : '• '} node={item} />}
-	// />;
+import WithText from '../../types/WithText';
+import { Tokens } from 'lib/marked';
+import Checkbox from 'expo-checkbox';
+export default function List({ node, prefix }: { node: Tokens.List; prefix?: string; }) {
+	// return <Text>{node.text}</Text>
+	return <View className="justify-start mb-2">
+		{
+			node.items.map((item, i) => <ListItem key={i} node={item} depth={prefix ?? 0} />)
+		}
+	</View>;
 }
 
-function ListItem({ mark, node }: { mark: string, node: ListItemType; }) {
-	const [isChecked, setChecked] = useState(!!node.checked);
-	const children = [...node.children];
+function ListItem({ node, depth = 0 }: { node: Tokens.ListItem; depth?: number; }) {
+	const children = [...node.tokens];
 	const paragraph = children.shift();
-	if (!paragraph) { return <></>; }
-	return <>
-		<View className='flex flex-row items-center'>
-			<Text>{mark}</Text>
-			{(typeof node.checked === 'boolean') && <View className='mx-1'>
-				<Checkbox
-					value={isChecked}
-					onValueChange={setChecked}
-					color={isChecked ? '#4630EB' : undefined}
-				/>
-			</View>}
-			<Paragraph node={paragraph as ParagraphType} />
+	return <View className={depth > 0 ? 'pl-4' : ""}>
+		<View className='flex-row'>
+			<Text className=''>・</Text>
+			{node.task && <Checkbox style={{marginHorizontal:4}} value={node.checked} />}
+			<FlowContent node={paragraph} />
 		</View>
-		<View className='pl-4'>{
-			children.map((item, i) => <Node key={i} node={item} />)
-		}</View></>;
+		<View>
+			{
+				children.map((item, i) => <FlowContent key={i} node={item} prefix={depth + 1} />
+				)
+			}
+		</View>
+	</View>;
 }

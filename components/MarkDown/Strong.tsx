@@ -1,8 +1,15 @@
 import { Strong as StrongType, Emphasis } from "mdast";
 import { Text, View } from 'react-native';
-import Node from './Node';
-import Block from './Block';
-import Inline from './Inline';
-export default function Strong({ node }: { node: StrongType | Emphasis; }) {
-	return <Text className='font-bold'><Inline node={node}/></Text>;
+import PhrasingContent from './PhrasingContent';
+import WithText from '../../types/WithText';
+import PhrasingContentType from '../../types/PhrasingContentType';
+import { Tokens } from 'lib/marked';
+export default function Strong({ node }: { node: Tokens.Em | Tokens.Strong; }) {
+	// return <Text className='font-semibold'>{node.text}</Text>
+	const match = node.raw.match(/^((?:\*\*)|(?:__)).*?((?:\*\*)|(?:__))$/);
+	const prefix = match?.[1] ?? '';
+	const suffix = match?.[2] ?? '';
+	return <Text className='font-semibold'>
+		{node.tokens.map((item, i) => <PhrasingContent key={i} node={item} />)}
+	</Text>;
 }
