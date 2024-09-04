@@ -1,4 +1,7 @@
 {
+	"cli": {
+		"appVersionSource": "remote"
+	  },
 	"build": {
 		"base": {
 			"env": {},
@@ -35,6 +38,7 @@
 		},
 		"production": {
 			"extends": "base",
+			"autoIncrement": true,
 			"env": {
 				"ENVIRONMENT": "production"
 			}
