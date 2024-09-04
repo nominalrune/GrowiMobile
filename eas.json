@@ -1,7 +1,12 @@
 {
 	"build": {
 		"base": {
-			"env": {
+			"env": {},
+			"android": {
+				"image": "latest"
+			},
+			"ios": {
+				"image": "latest"
 			}
 		},
 		"development": {
