@@ -19,7 +19,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package":"com.nominalrune.growi_mobile"
+      "package":"com.nominalrune.growimobile"
     },
     "web": {
       "favicon": "./assets/favicon.png"
