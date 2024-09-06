@@ -2,8 +2,7 @@ import { Stack, router, useLocalSearchParams } from 'expo-router';
 import { KeyboardAvoidingView, Platform, ScrollView, Text, View } from 'react-native';
 import Button from '../../components/Base/Button';
 import usePage from '../../hooks/usePage';
-import Parser from '../../services/Markdown/Parser';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import Root from '../../components/Markdown/Root';
 import RootEdit from '../../components/MarkdownEdit/Root';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
@@ -18,18 +17,11 @@ export default function Page() {
   const selection = useRef({ start: 0, end: 0, });
   function getLine(cursor: number) {
     if (!page) { return ''; }
-    // if (!page || cursor === 0) { return 0; }
     const body = page.revision.body;
     let alt = body.substring(0, cursor) + '=#_$CURSOR@?-~' + body.substring(cursor);
     const splitted = alt.split('\n');
     const lineNo = splitted.findIndex(line => /^.*?=#_\$CURSOR@\?-~.*?$/.test(line));
     return lineNo;
-    // if (body.length <= cursor) { return body.length; }
-    // let before = body.substring(0, cursor);
-    // if (before.lastIndexOf('\n') !== -1) before = before.substring(before.lastIndexOf('\n') + 1);
-    // let after = body.substring(cursor);
-    // if (after.indexOf('\n') !== -1) after = after.substring(0, after.indexOf('\n'));
-    // return before + after;
   }
   function indent() {
     if (!page) { return ''; }
