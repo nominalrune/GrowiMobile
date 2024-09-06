@@ -1,6 +1,5 @@
-// import { Root as RootType } from "mdast";
-import { NativeSyntheticEvent, ScrollView, Text, TextInput, TextInputChangeEventData, TextInputKeyPressEventData, TextInputSelectionChangeEventData, View } from 'react-native';
-import { RefObject, useEffect, useMemo, useRef, useState } from 'react';
+import { View } from 'react-native';
+import { useMemo } from 'react';
 import Parser from '../../services/Markdown/Parser';
 import FlowContent from './FlowContent';
 interface Prop {
