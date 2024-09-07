@@ -1,6 +1,5 @@
-import { Table as TableType } from "mdast";
-import { Text, View } from 'react-native';
-import WithText from '../../types/WithText';
-export default function Table({ node }: { node: WithText<TableType>; }) {
-	return <Text>{node.text}</Text>;
+import { Text } from 'react-native';
+import { Tokens } from 'lib/marked';
+export default function Table({ node }: { node: Tokens.Table; }) {
+	return <Text>{node.raw}</Text>;
 }

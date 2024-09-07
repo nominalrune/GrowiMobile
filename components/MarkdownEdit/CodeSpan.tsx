@@ -1,6 +1,4 @@
-import { Code as CodeType } from "mdast";
-import { Text, useColorScheme, View } from 'react-native';
-import WithText from '../../types/WithText';
+import { Text, useColorScheme } from 'react-native';
 import { Tokens } from 'marked';
 export default function CodeSpan({ node }: { node: Tokens.Codespan; }) {
 	const colorScheme = useColorScheme();

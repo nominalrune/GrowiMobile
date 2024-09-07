@@ -1,8 +1,7 @@
-// import { Root as RootType } from "mdast";
-import { NativeSyntheticEvent, ScrollView, Text, TextInput, TextInputChangeEventData, TextInputKeyPressEventData, TextInputSelectionChangeEventData, View } from 'react-native';
-import { RefObject, useEffect, useMemo, useRef, useState } from 'react';
+import { NativeSyntheticEvent, TextInput, TextInputChangeEventData, TextInputKeyPressEventData, TextInputSelectionChangeEventData, View } from 'react-native';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import Parser from '../../services/Markdown/Parser';
-import FlowContent from './FlowContent';
+import Node from './Node';
 interface Prop{ 
 	content: string; 
 	update: (context: string) => void;
@@ -41,7 +40,7 @@ export default function Root({ content, update, setSelection }:Prop ) {
 			onSelectionChange={handleSelectionChange}
 			onKeyPress={handlePressed}
 		>
-			{contentNode?.map((node, i) => <FlowContent key={i} node={node} />)}
+			{contentNode?.map((node, i) => <Node key={i} node={node} />)}
 		</TextInput>
 	</View>;
 }

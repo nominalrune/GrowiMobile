@@ -1,23 +1,13 @@
-import { Heading as HeadingType } from "mdast";
-import { Text, View } from 'react-native';
-import PhrasingContent from './PhrasingContent';
-import WithText from '../../types/WithText';
-import PhrasingContentType from '../../types/PhrasingContentType';
-import { Tokens } from 'marked';
+import { Text } from 'react-native';
+import Node from './Node';
+import { MarkedToken, Tokens } from 'marked';
 
 export default function Heading({ node }: { node: Tokens.Heading; }) {
 	const match = node.raw.match(/^([ \t]*#+ )?(.*?)$/);
 	const mark = match?.[1] ?? '';
-	const rest = match?.[2] ?? '';
 	return <Text className={`${node.depth === 1 ? 'text-2xl' : node.depth === 2 ? "text-xl" : "text-lg"}`}>
 		<Text className='text-slate-400/80 font-extrabold'>{mark}</Text>
-		{rest}
-		{/* {node.children.map((item, i) => <PhrasingContent key={i} node={item as PhrasingContentType} />)} */}
+		{node.tokens.map((item, i) => <Node key={i} node={item as MarkedToken} />)}
 		{'\n'}
 	</Text>;
-	// return <Text className={`${node.depth === 1 ? 'text-2xl' : node.depth === 2 ? "text-xl" : "text-lg"}`}>
-	// 	<Text className='text-slate-400/80 font-semibold'>{prefix}{'#'.repeat(node.depth) + ' '}</Text>
-	// 	{node.children.map((item,i) => <Text><PhrasingContent key={i} node={item} /></Text>)}
-	// 	{'\n'}
-	// </Text>;
 }

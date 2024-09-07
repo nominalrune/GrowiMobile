@@ -1,6 +1,5 @@
-import { Tokens } from 'marked';
-import { Image as ImageType } from "mdast";
-import { Text, View, Image } from 'react-native';
+import { Tokens } from 'lib/marked';
+import { Text } from 'react-native';
 export default function({ node }: { node: Tokens.Image; }) {
 	return <>
 		<Text className='text-slate-400/80 font-extrabold'>![</Text>

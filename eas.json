@@ -26,10 +26,10 @@
 				"simulator": true
 			}
 		},
-		"staging": {
+		"preview": {
 			"extends": "base",
 			"env": {
-				"ENVIRONMENT": "staging"
+				"ENVIRONMENT": "preview"
 			},
 			"distribution": "internal",
 			"android": {
