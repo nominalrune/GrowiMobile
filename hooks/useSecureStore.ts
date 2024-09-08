@@ -7,5 +7,8 @@ export default function useSecureStore() {
 		let result = await SecureStore.getItemAsync(key);
 		return result;
 	}
-	return {set, get};
+	async function remove(key: string) {
+		await SecureStore.deleteItemAsync(key);
+	}
+	return { set, get, remove };
 }

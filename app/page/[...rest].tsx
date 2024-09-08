@@ -40,7 +40,7 @@ export default function Page() {
   return <>
     <Stack.Screen
       options={{
-        headerTitle: () => <View style={{flexDirection:"row"}} className='flex-row'>
+        headerTitle: () => <View style={{ flexDirection: "row" }} className='flex-row'>
           <View className='my-2'>
             <Text className='text-2xl text-slate-700'>{rest.at(-1)}</Text>
             <Text className='text-slate-400/90'>{path}</Text>
@@ -52,16 +52,16 @@ export default function Page() {
       }}
     />
     <ScrollView>
-      {page && ( isEdit?<RootEdit
-            setSelection={(s) => { selection.current = s; console.log('line:', getLine(s.start)); }}
-            content={page.revision.body} update={update} />
+      {page && (isEdit ? <RootEdit
+        setSelection={(s) => { selection.current = s; console.log('line:', getLine(s.start)); }}
+        content={page.revision.body} update={update} />
         : <Root content={page.revision.body} />
       )}
     </ScrollView>
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       className='h-12 flex-row justify-end items-center bg-slate-100'
-      style={{flexDirection:"row"}}
+      style={{ flexDirection: "row" }}
     >
       {
         isEdit ? <>

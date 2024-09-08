@@ -1,31 +1,27 @@
-import { TextInput, Text, View, Pressable } from 'react-native';
+import { TextInput, Text, View, Pressable, type TextInputProps } from 'react-native';
 import { useState, useEffect } from 'react';
-import useAuthStore from '../../hooks/useAuthStore';
 import { Link, router } from 'expo-router';
-import GrowiAPI from '../../services/GrowiAPI/GrowiAPI';
-import useStorage from '../../hooks/useStorage';
+import useAuth from '../../contexts/Auth/useAuth';
 export default function Login() {
 	const [url, setUrl] = useState<string | null>(null);
-	const [token, setToken] = useState<string | null>(null);
 	const [email, setEmail] = useState<string>('');
 	const [password, setPassword] = useState<string>('');
 	const [message, setMessage] = useState("");
-	const { checkAndSave, get } = useAuthStore();
+	const { user, url: _url, login } = useAuth();
 	useEffect(() => {
-		(async () => {
-			const { token } = await get();
-			token && setToken(token);
-		})();
-	}, []);
-	const storage = useStorage();
+		if (_url) {
+			setUrl(_url);
+		}
+		if (user) {
+			setEmail(user.email);
+		}
+	}, [user, _url]);
 	useEffect(() => {
 		if (!url || !email || !password) { return; }
-		GrowiAPI.login(url, email, password).then(async (result) => {
-			const r = result;
-			console.log("user login, user:", result);
-			setMessage('login success');
-			const user = { ...r, apiTolen: undefined, imageUrlCached: url + r?.imageUrlCached };
-			await storage.set('user', user)
+		login(url, email, password).then(() => {
+			setMessage("ログインに成功しました。");
+		}).catch((error) => {
+			setMessage("ログインに失敗しました。" + error);
 		});
 	}, [url, email, password]);
 	return <View className='flex flex-col gap-4 m-2'>
@@ -47,7 +43,7 @@ export default function Login() {
 		))}
 		{message ? <Text className='text-slate-600'>{message}</Text> : <></>}
 		<Link href='/'>
-			<Pressable onPress={() => router.push('/')} className='bg-emerald-400 hover:bg-emerald-300'><Text>次へ</Text></Pressable>
+			<Pressable onPress={() => router.push('/user')} className='px-2 py-1 rounded bg-emerald-400 hover:bg-emerald-300'><Text>次へ</Text></Pressable>
 		</Link>
 	</View>;
 }

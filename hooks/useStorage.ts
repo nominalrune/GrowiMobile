@@ -20,5 +20,8 @@ export default function useStorage() {
 			return undefined;
 		}
 	}
-	return { get, getObject, set };
+	async function remove(key: string) {
+		await AsyncStorage.removeItem(key);
+	}
+	return { get, getObject, set, remove };
 }

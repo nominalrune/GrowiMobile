@@ -1,7 +1,6 @@
-import { Link, router, Stack } from 'expo-router';
-import { View, Text, Pressable, FlatList, SafeAreaView } from 'react-native';
+import { Stack } from 'expo-router';
+import { View, FlatList } from 'react-native';
 import usePages from '../../hooks/usePages';
-import Button from '../../components/Base/Button';
 import PageItem from '../../components/PageItem';
 import IconButton from '../../components/Base/IconButton';
 import FontAwesome from '@expo/vector-icons/FontAwesome';

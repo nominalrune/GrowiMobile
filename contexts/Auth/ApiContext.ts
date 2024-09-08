@@ -1,6 +1,5 @@
 import { createContext } from 'react';
 import GrowiAPI from '../services/GrowiAPI/GrowiAPI';
-import useAuthStore from '../hooks/useAuthStore';
 
 interface IApiContext {
 	api: GrowiAPI | null,
