@@ -19,7 +19,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package":"com.nominalrune.growimobile"
+      "package": "com.nominalrune.growimobile"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -33,7 +33,21 @@
         }
       ],
       "expo-router",
-      "expo-font"
+      [
+        "expo-font",
+        {
+          "fonts": [
+            "assets/fonts/katex/KaTeX_Caligraphic-Regular.woff2",
+            "assets/fonts/katex/KaTeX_Fraktur-Bold.woff2",
+            "assets/fonts/katex/KaTeX_Main-BoldItalic.woff2",
+            "assets/fonts/katex/KaTeX_Main-Italic.woff2",
+            "assets/fonts/katex/KaTeX_Main-Regular.woff2",
+            "assets/fonts/katex/KaTeX_Math-BoldItalic.woff2",
+            "assets/fonts/katex/KaTeX_Math-Italic.woff2",
+            "assets/fonts/katex/KaTeX_SansSerif-Bold.woff2"
+          ]
+        }
+      ]
     ],
     "extra": {
       "router": {

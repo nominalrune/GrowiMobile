@@ -9,7 +9,7 @@ export default function Code({ node }: { node: Tokens.Code; }) {
 		}>
 			<Text className='text-slate-400/80 font-extrabold'>```</Text>
 			<Text>{node.lang}{`\n`}</Text>
-			<Text>{node.text}{`\n`}</Text>
+			<Text>{node.text}{`\n`}</Text> {/* FIXME quotation and other special chars not rendered properly */}
 			<Text className='text-slate-400/80 font-extrabold'>```{`\n`}</Text>
 		</Text>;
 }
