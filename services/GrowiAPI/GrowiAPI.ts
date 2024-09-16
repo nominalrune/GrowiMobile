@@ -33,24 +33,24 @@ export default class GrowiAPI {
 		return user;
 	}
 	private async fetch<T>(path: string, method: 'GET' | 'POST' | 'PUT', urlParam?: object, body?: object): Promise<T> {
-		console.log("url:", this.setting.url, 'path', path, 'method', method, 'urlParam', urlParam);
-		let _url: URL;
+		// console.log("url:", this.setting.url, 'path', path, 'method', method, 'urlParam', urlParam);
+		let url: URL;
 		try {
-			_url = new URL(`_api/v3/${path}`, this.setting.url);
+			url = new URL(`_api/v3/${path}`, this.setting.url);
 		} catch (e) {
 			console.info("error", e);
 			throw e;
 		}
-		_url.searchParams.set('access_token', this.setting.token);
+		url.searchParams.set('access_token', this.setting.token);
 		if (urlParam) {
 			Object.entries(urlParam).forEach(([k, v]) => {
-				_url.searchParams.set(k, v);
+				url.searchParams.set(k, v);
 			});
 		}
-		console.log('final url', _url.toString());
+		console.log('url', url.toString());
 
 		const _body = body ? JSON.stringify(body) : undefined;
-		const result = await fetch(_url.toString(), {
+		const result = await fetch(url.toString(), {
 			method: method,
 			body: _body,
 			headers: {
@@ -59,7 +59,8 @@ export default class GrowiAPI {
 		});
 
 		if (!result.ok) {
-			throw new Error(`Fetch Status error. ${result.status} ${result.statusText}, url:${_url.toString()} | ${await result.text()}`);
+			console.warn(`Fetch Status error. ${result.status} ${result.statusText}, url:${url.toString()} | ${await result.text()}`);
+			throw new Error(`Fetch Status error. ${result.status} ${result.statusText}, url:${url.toString()} | ${await result.text()}`);
 		}
 		console.log('Fetch success.');
 		return await result.json() as T;
@@ -74,8 +75,7 @@ export default class GrowiAPI {
 	}
 
 	async fetchDocumentContent(path: string) {
-		const encodedPath = encodeURI(path);
-		const response = await this.fetch<{ page: PageContent; }>(`page`, 'GET', { path: encodedPath });
+		const response = await this.fetch<{ page: PageContent; }>(`page`, 'GET', { path: path });
 		return response;
 	}
 	async savePageContent(page: PageContent) {

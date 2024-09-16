@@ -4,9 +4,13 @@ import useHistory from './useHistory';
 import useApi from './useApi';
 
 export default function usePage(path: string) {
-	const promise = useRef<Promise<any>>();
 	const { current, push, undo, redo, reset } = useHistory<PageContent>();
 	const { api } = useApi();
+	useEffect(() => {
+		api?.fetchDocumentContent(path)?.then(content => {
+			push(content.page);
+		});
+	}, [path]);
 	function update(content: string) {
 		if (current) {
 			push({ ...current, revision: { ...current.revision, body: content } });
