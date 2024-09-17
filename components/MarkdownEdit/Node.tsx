@@ -10,7 +10,7 @@ import Link from './Link';
 import Paragraph from './Paragraph';
 import Table from './Table';
 import { Text } from 'react-native';
-import { MarkedToken } from 'lib/marked';
+import { MarkedToken } from 'lib/ExtendedMarked';
 import CodeSpan from './CodeSpan';
 
 interface Prop {

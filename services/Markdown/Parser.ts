@@ -1,5 +1,5 @@
 import { MarkedToken } from 'lib/marked';
-import marked from 'lib/marked_extention/latex';
+import marked from 'lib/ExtendedMarked';
 
 export default class Parser {
 	static parse(input: string) {

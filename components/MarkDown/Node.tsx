@@ -7,12 +7,12 @@ import Heading from './Heading';
 import Html from './Html';
 import Image from './Image';
 import Link from './Link';
-import Katex from './Katex';
-import InlineKatex from './InlineKatex';
+import Math from './Math';
+import InlineMath from './InlineMath';
 import Paragraph from './Paragraph';
 import Table from './Table';
 import { Text, View } from 'react-native';
-import { MarkedToken } from 'lib/marked';
+import { MarkedToken } from '../../types/Token';
 import CodeSpan from './CodeSpan';
 import React from 'react';
 
@@ -54,9 +54,9 @@ export default function Node({ node, prefix }: Prop) {
 					: node.raw
 			}</Text>;
 		case 'latex':
-			return <Katex node={node} />;
+			return <Math node={node} />;
 		case 'inline-latex':
-			return <InlineKatex node={node} />;
+			return <InlineMath node={node} />;
 		case 'space':
 			return <Text>{`${node.raw.replace(/\n\n/, `\n`)}`}</Text>;
 		default:
