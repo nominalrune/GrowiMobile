@@ -6,6 +6,9 @@ export default class Parser {
 		const tokens = marked.lexer(input) as MarkedToken[];
 		return tokens;
 	}
+	static render(input:string){
+		return marked.marked(input, {gfm: true});
+	}
 	static stringify(input: MarkedToken[]) {
 		const content = input.map(i=>i.raw).join("\n");
 		return content;

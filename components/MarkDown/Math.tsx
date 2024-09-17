@@ -10,7 +10,7 @@ import { AllPackages } from 'mathjax-full/js/input/tex/AllPackages';
 // import MathJax from "mathjax";
 // import Latex from 'react-native-latex';
 
-import { SvgXml } from 'react-native-svg';
+import { SvgCss } from 'react-native-svg/css';
 import { LatexToken } from '../../types/Token';
 export default function Math({ node }: { node: LatexToken; }) {
 	const adaptor = liteAdaptor();
@@ -18,19 +18,22 @@ export default function Math({ node }: { node: LatexToken; }) {
 	const tex = new TeX({ packages: AllPackages });
 	const svg = new SVG({ fontCache: 'none' });
 	const doc = mathjax.document("", { InputJax: tex, OutputJax: svg }).convert(node.text);
-	const html = adaptor.innerHTML(doc);
+	const html = adaptor.serializeXML(doc);
+	const match = html.match(/width="(.*?)ex".*?height="(.*?)ex"/);
+	const width = Number(match?.[1]) * 10;
+	const height = Number(match?.[2]) * 10;
 	console.log({ html });
 	return <>
-		<View className='rounded-lg  p-1 m-1'>
-			<Text>!!!!!!!!!</Text>
-			{/* <WebView
+		<View className='rounded-lg p-1 m-1'>
+			<WebView
 				key={node.text}
-				style={{ width: "100%", height: 100, backgroundColor: "transparent" }}
+				style={{ width: "100%", height, backgroundColor: "transparent", }}
 				originWhitelist={['*']}
+				scrollEnabled={true}
 				source={{
-					html: `${html}`
-				}} /> */}
-
-			<SvgXml xml={html} width="100%" height="100%" />
+					// html: `${html}`
+					html: `${html.replace("<svg style=\"", "<svg style=\"height:100%; width:100%; ")}`
+				}} />
+			{/* <SvgCss style={{backgroundColor:"white"}} xml={html} width={"100%"} height={"100%"} /> */}
 		</View></>;
 }

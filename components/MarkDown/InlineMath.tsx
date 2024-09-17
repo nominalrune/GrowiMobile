@@ -18,10 +18,23 @@ export default function InlineMath({ node }: { node: InlineLatexToken; }) {
 	RegisterHTMLHandler(adaptor);
 	const tex = new TeX({ packages: AllPackages });
 	const svg = new SVG({ fontCache: 'none' });
-	const doc = mathjax.document("", { InputJax: tex, OutputJax: svg }).convert(node.text);
+	const doc = mathjax.document("", { InputJax: tex, OutputJax: svg }).convert(node.text, {
+		display: false,
+	});
 	const html = adaptor.innerHTML(doc);
-	console.log({ html });
-	return <>
-		<SvgXml xml={html} width="100%" height="100%" />
-	</>;
+
+	const match = html.match(/width="(.*?)ex".*?height="(.*?)ex"/);
+	const width = Number(match?.[1]);
+	const height = Number(match?.[2]);
+	// console.log({ html });
+	return <View>
+		<WebView
+			key={node.text}
+			style={{ width: width * 11, height: height * 12, backgroundColor: "transparent", }}
+			source={{
+				// html
+				html: `${html.replace("<svg style=\"", `<svg style="height:${height * 4}ex; width:${width * 4}ex; `)}`
+			}} />
+		{/* <SvgXml xml={html} width="100%" height="100%" /> */}
+	</View>;
 }

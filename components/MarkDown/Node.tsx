@@ -53,13 +53,15 @@ export default function Node({ node, prefix }: Prop) {
 					? node.tokens?.map((token, i) => <Node key={i} node={token as MarkedToken} />)
 					: node.raw
 			}</Text>;
-		case 'latex':
+		case 'blockKatex':
 			return <Math node={node} />;
-		case 'inline-latex':
+		case 'inlineKatex':
 			return <InlineMath node={node} />;
 		case 'space':
 			return <Text>{`${node.raw.replace(/\n\n/, `\n`)}`}</Text>;
-		default:
+		case 'hr':
+			return <View className='w-full border-b border-slate-400/50'></View>
+			default:
 			return <Text>{node.raw}</Text>;
 	}
 }
