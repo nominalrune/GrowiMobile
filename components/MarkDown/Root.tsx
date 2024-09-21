@@ -1,13 +1,22 @@
 import { View } from 'react-native';
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import Parser from '../../services/Markdown/Parser';
-import FlowContent from './FlowContent';
+import Node from './Node';
+import WebView from 'react-native-webview';
 interface Prop {
 	content: string;
 }
 export default function Root({ content }: Prop) {
 	const contentNode = useMemo(() => Parser.parse(content), [content]);
-	return <View className='m-1'>
-		{contentNode?.map((node, i) => <FlowContent key={i} node={node} />)}
+	useEffect(() => { console.log(JSON.stringify(contentNode)); }, [contentNode]);
+	return <View className='m-1 px-2'>
+		{contentNode?.map((node, i) => <Node key={i} node={node} />)}
+		{/* <WebView
+			style={{ width: "100%", height: 1000, backgroundColor: "transparent", }}
+			originWhitelist={['*']}
+			scrollEnabled={true}
+			source={{
+				html: Parser.render(content) as string
+			}} /> */}
 	</View>;
 }

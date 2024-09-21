@@ -1,5 +1,5 @@
 import { ListItem as ListItemType, List as ListType, Paragraph as ParagraphType } from "mdast";
-import FlowContent from './FlowContent';
+import Node from './Node';
 import { FlatList, Text, View } from 'react-native';
 import Paragraph from './Paragraph';
 import { useState } from 'react';
@@ -22,11 +22,11 @@ function ListItem({ node, depth = 0 }: { node: Tokens.ListItem; depth?: number; 
 		<View className='flex-row'>
 			<Text className=''>・</Text>
 			{node.task && <Checkbox style={{marginHorizontal:4}} value={node.checked} />}
-			<FlowContent node={paragraph} />
+			{paragraph && <Node node={paragraph} />}
 		</View>
 		<View>
 			{
-				children.map((item, i) => <FlowContent key={i} node={item} prefix={depth + 1} />
+				children.map((item, i) => <Node key={i} node={item} prefix={depth + 1} />
 				)
 			}
 		</View>

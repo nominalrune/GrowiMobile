@@ -1,6 +1,6 @@
 import { View, Text } from 'react-native';
 
-import Node from './FlowContent';
+import Node from './Node';
 import { Fragment } from 'react';
 import Strong from './Strong';
 import Html from './Html';

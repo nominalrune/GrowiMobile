@@ -1,17 +1,17 @@
-import { Paragraph as ParagraphType } from "mdast";
 import { Text, View } from 'react-native';
-import PhrasingContent from './PhrasingContent';
+import Node from './Node';
 import { Fragment } from 'react';
-import WithText from '../../types/WithText';
-import { Tokens } from 'marked';
-export default function Paragraph({ node, prefix='' }: {
+import { MarkedToken, Tokens } from 'marked';
+import Math from './Math';
+export default function Paragraph({ node, }: {
 	node: Tokens.Paragraph;
-	prefix?:string;
+	prefix?: string;
 }) {
-	return <Text>{
-		node.tokens.map((child,i) => <Fragment key={i}>
-			<Text>{prefix}</Text>
-			<PhrasingContent node={child} />
+	return <View className='flex-row flex-wrap justify-start items-center'>{
+		node.tokens.map((child, i) => <Fragment key={i}>
+			<View>
+				<Node node={child as MarkedToken} />
+			</View>
 		</Fragment>)
-	}{`\n`}</Text>;
+	}</View>;
 }
