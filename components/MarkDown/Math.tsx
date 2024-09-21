@@ -22,9 +22,9 @@ export default function Math({ node }: { node: LatexToken; }) {
 	const match = html.match(/width="(.*?)ex".*?height="(.*?)ex"/);
 	const width = Number(match?.[1]) * 10;
 	const height = Number(match?.[2]) * 10;
-	console.log({ html });
+	// console.log({ html });
 	return <>
-		<View className='rounded-lg p-1 m-1'>
+		<View className='rounded-lg p-1 m-1 overflow-hidden'>
 			<WebView
 				key={node.text}
 				style={{ width: "100%", height, backgroundColor: "transparent", }}

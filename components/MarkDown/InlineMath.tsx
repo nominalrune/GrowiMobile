@@ -27,10 +27,11 @@ export default function InlineMath({ node }: { node: InlineLatexToken; }) {
 	const width = Number(match?.[1]);
 	const height = Number(match?.[2]);
 	// console.log({ html });
-	return <View>
+	return <View >
 		<WebView
+			scrollEnabled={false}
 			key={node.text}
-			style={{ width: width * 11, height: height * 12, backgroundColor: "transparent", }}
+			style={{ width: width * 11, height: height * 12, backgroundColor: "transparent", overflow: "hidden" }}
 			source={{
 				// html
 				html: `${html.replace("<svg style=\"", `<svg style="height:${height * 4}ex; width:${width * 4}ex; `)}`
