@@ -32,22 +32,7 @@
           "faceIDPermission": "Allow $(PRODUCT_NAME) to access your Face ID biometric data."
         }
       ],
-      "expo-router",
-      [
-        "expo-font",
-        {
-          "fonts": [
-            "assets/fonts/katex/KaTeX_Caligraphic-Regular.woff2",
-            "assets/fonts/katex/KaTeX_Fraktur-Bold.woff2",
-            "assets/fonts/katex/KaTeX_Main-BoldItalic.woff2",
-            "assets/fonts/katex/KaTeX_Main-Italic.woff2",
-            "assets/fonts/katex/KaTeX_Main-Regular.woff2",
-            "assets/fonts/katex/KaTeX_Math-BoldItalic.woff2",
-            "assets/fonts/katex/KaTeX_Math-Italic.woff2",
-            "assets/fonts/katex/KaTeX_SansSerif-Bold.woff2"
-          ]
-        }
-      ]
+      "expo-router"
     ],
     "extra": {
       "router": {
